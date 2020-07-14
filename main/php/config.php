@@ -3,8 +3,8 @@
 
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'seongjun0303');
-define('DB_PASSWORD', 'Abc98sj!');
-define('DB_NAME', 'bookstore');
+define('DB_PASSWORD', 'seongjun0303');
+define('DB_NAME', 'online_bookstore');
  
 /* Attempt to connect to MySQL database */
 $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);

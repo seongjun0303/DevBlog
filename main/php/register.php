@@ -5,6 +5,9 @@ require_once "config.php";
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
+$firstname = $lastname = $address = $fullname = $cardnumber = $expiration = $cvc = "";
+$firstname_err = $lastname_err = $address_err = $fullname_err = $cardnumber_err = $expiration_err = $cvc_err = "";
+
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -60,9 +63,66 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $confirm_password_err = "Password did not match.";
         }
     }
-    
+
+    // Validate firstname
+    if(empty(trim($_POST["firstname"]))){
+        $firstname_err = "Please enter firstname";
+    }
+    else{
+        $firstname = trim($_POST["firstname"]);
+    }
+
+    // Validate lastname
+    if(empty(trim($_POST["lastname"]))){
+        $lastname_err = "Please enter lastname";
+    }
+    else{
+        $lastname = trim($_POST["lastname"]);
+    }
+
+    // Validate address
+    if(empty(trim($_POST["address"]))){
+        $address_err = "Please enter address";
+    }
+    else{
+        $address = trim($_POST["address"]);
+    }
+
+    // Validate fullname
+    if(empty(trim($_POST["fullname"]))){
+        $fullname_err = "Please enter fullname";
+    }
+    else{
+        $fullname = trim($_POST["fullname"]);
+    }
+
+    // Validate cardnumber
+    if(empty(trim($_POST["cardnumber"]))){
+        $cardnumber_err = "Please enter card number";
+    }
+    else{
+        $cardnumber = trim($_POST["cardnumber"]);
+    }
+
+    // Validate expiration date
+    if(empty(trim($_POST["expiration"]))){
+        $expiration_err = "Please enter expiration date";
+    }
+    else{
+        $expiration = trim($_POST["expiration"]);
+    }
+
+    // Validate cvc date
+    if(empty(trim($_POST["cvc"]))){
+        $cvc_err = "Please enter cvc";
+    }
+    else{
+        $cvc = trim($_POST["cvc"]);
+    }
+
+
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)&& empty($address_err)&& empty($firstname_err)&& empty($lastname_err)&& empty($fullname_err)&& empty($expiration_err)&& empty($cardnumber_err)&& empty($cvc_err)){
         
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password) VALUES (?, ?)";

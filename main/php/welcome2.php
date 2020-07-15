@@ -7,34 +7,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
     header("location: login.php");
     exit;
 }
-
-$username = $_SESSION["username"];
-$active = 0;
-$email = "";
-require_once "config.php";
-$sql = "SELECT * FROM users";
-$result = $link->query($sql);
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        if ($row["username"] == $username){
-            $active = $row["active"];
-            $email = $row["email"];
-        }
-    }
-}
-else {
-    echo "0 results";
-}
-$link->close();
-
-if ($active == 1){
-    header("location: welcome2.php");
-    exit;
-}
-
-mail($email, "Verify your email", "Please click the link below in order to verify your email\n\nhttp://seongcho9803.com/php/verify.php");
-
-
 ?>
  
 <!DOCTYPE html>
@@ -51,10 +23,10 @@ mail($email, "Verify your email", "Please click the link below in order to verif
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to CSCI 4050 Online Bookstore</h1>
     </div>
-    <p>Your status is currently <b>inactive</b>.</p>
-    <p>We have sent you a confimation email. Please verify your email. </p>
-    <p>You cannot edit your info until you confirm your email</P>
+    <p>Your status is currently <b>active</b>.</p>
+    <p>Thank you for confirming your email.</p>
     <p>
+        <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
     </p>
 </body>

@@ -1,18 +1,13 @@
 <?php
 // Initialize the session
 session_start();
- 
-// Check if the user is logged in, if not then redirect to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
 
 // Include config file
 require_once "config.php";
 
 // Define variables and initialize with empty values
-$cur_password = $cur_password_err = "";
+$cur_username = $cur_username_err = "";
+$cur_email = $cur_email_err = "";
 $new_password = $confirm_password = "";
 $new_password_err = $confirm_password_err = "";
  
@@ -38,24 +33,45 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
-    if(empty(trim($_POST["cur_password"]))){
-        $cur_password_err = "Please enter your current password";
-    } elseif(trim($_POST["cur_password"] !== $_SESSION["password"])){
-        $cur_password_err = "Current Password is not correct";
+    if(empty(trim($_POST["cur_username"]))){
+        $cur_username_err = "Please enter your current username";
     }
-        
+
+    if(empty(trim($_POST["cur_email"]))){
+        $cur_email_err = "Please enter your current email";
+    }
+    $valid_input = false;
+
     // Check input errors before updating the database
-    if(empty($new_password_err) && empty($confirm_password_err) && empty($cur_password_err)){
+    if(empty($new_password_err) && empty($confirm_password_err) && empty($cur_username_err)&& empty($cur_email_err)){
         // Prepare an update statement
-        $sql = "UPDATE users SET password = ? WHERE id = ?";
+
+        $sql = "SELECT * FROM users";
+        $result = $link->query($sql);
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                if ($row["username"] == $_POST["cur_username"]){
+                    if ($row["email"] == $_POST["cur_email"]) {
+                        $valid_input = true;
+                    }
+                }
+            }
+        }
+    }
+
+    // Check input errors before updating the database
+    if(empty($new_password_err) && empty($confirm_password_err) && empty($cur_username_err)&& empty($cur_email_err) && $valid_input){
+        // Prepare an update statement
+        $sql = "UPDATE users SET password = ? WHERE username = ? AND email = ? ";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "si", $param_password, $param_id);
+            mysqli_stmt_bind_param($stmt, "sss", $param_password, $param_username, $param_email);
             
             // Set parameters
             $param_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $param_id = $_SESSION["id"];
+            $param_username = $_POST["cur_username"];
+            $param_email = $_POST["cur_email"];
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -64,12 +80,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("location: login.php");
                 exit();
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Ooops!";
             }
 
             // Close statement
             mysqli_stmt_close($stmt);
         }
+    }
+    elseif(!($valid_input)){
+        echo "Oops! Username or Email incorrect";
     }
     
     // Close connection
@@ -81,7 +100,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Reset Password</title>
+    <title>Forgot Password</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
@@ -90,13 +109,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
     <div class="wrapper">
-        <h2>Reset Password</h2>
+        <h2>Forgot Password</h2>
         <p>Please fill out this form to reset your password.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
-            <div class="form-group <?php echo (!empty($cur_password_err)) ? 'has-error' : ''; ?>">
-                <label>Current Password</label>
-                <input type="password" name="cur_password" class="form-control" value="<?php echo $cur_password; ?>">
-                <span class="help-block"><?php echo $cur_password_err; ?></span>
+            <div class="form-group <?php echo (!empty($cur_username_err)) ? 'has-error' : ''; ?>">
+                <label>Current Username</label>
+                <input type="text" name="cur_username" class="form-control" value="<?php echo $cur_username; ?>">
+                <span class="help-block"><?php echo $cur_username_err; ?></span>
+            </div>
+            <div class="form-group <?php echo (!empty($cur_email_err)) ? 'has-error' : ''; ?>">
+                <label>Current Email</label>
+                <input type="text" name="cur_email" class="form-control" value="<?php echo $cur_email; ?>">
+                <span class="help-block"><?php echo $cur_email_err; ?></span>
             </div>
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                 <label>New Password</label>
@@ -110,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <a class="btn btn-link" href="welcome.php">Cancel</a>
+                <a class="btn btn-link" href="login.php">Cancel</a>
             </div>
         </form>
     </div>    

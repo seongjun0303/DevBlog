@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;     
-                            
+                            $_SESSION["password"] = $password;
                             // Redirect user to welcome page
                             header("location: welcome.php");
                         } else{
@@ -119,6 +119,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
             <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <p>Forgot your password? <a href="forgot-password.php">Forgot my password</a>.</p>
             <p>Are you an admin? <a href="login-admin.php">Login here</a>.</p>
         </form>
     </div>    

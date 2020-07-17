@@ -52,9 +52,7 @@ mail($email, "Verify your email", "Please click the link below in order to verif
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to CSCI 4050 Online Bookstore</h1>
     </div>
-    <p>Your status is currently <b>inactive</b>.</p>
-    <p>We have sent you a confimation email. Please verify your email. </p>
-    <p>You cannot edit your info until you confirm your email</P>
+    <p>Your status is currently <b>admin</b>.</p>
     <p>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
     </p>

@@ -13,7 +13,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Book 2</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 14px sans-serif; text-align: center; }
@@ -23,13 +23,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to CSCI 4050 Online Bookstore</h1>
     </div>
-    <p>Your status is currently <b>active</b>.</p>
-    <p>Thank you for confirming your email.</p>
     <p>
         <a href="user-browse.php" class="btn btn-warning">Browse Books</a>
         <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
         <a href="reset-info.php" class="btn btn-warning">Reset Your Info</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+    </p>
+    <p><img src="img\book-2.jpg" width="300" height="500"></p>
+    <p>
+    Title:   Learning Web Design<br>
+    Author:  Jennifer Robbins<br>
+    ISBN:    9781491960202<br>
+    User     Rating: 4.49/5<br>
+    Price:   14.99<br>
     </p>
 </body>
 </html>

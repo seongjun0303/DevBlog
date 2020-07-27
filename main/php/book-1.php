@@ -13,7 +13,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>book 1</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 14px sans-serif; text-align: center; }
@@ -23,13 +23,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to CSCI 4050 Online Bookstore</h1>
     </div>
-    <p>Your status is currently <b>active</b>.</p>
-    <p>Thank you for confirming your email.</p>
     <p>
         <a href="user-browse.php" class="btn btn-warning">Browse Books</a>
         <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
         <a href="reset-info.php" class="btn btn-warning">Reset Your Info</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+    </p>
+    <p><img src="img\book-1.jpg" width="300" height="500"></p>
+    <p>
+    Title:   Learn Android Studio 4<br>
+    Author:  Ted Hagos<br>
+    ISBN:    9781484259368<br>
+    User     Rating: 4.25/5<br>
+    Price:   29.99<br>
     </p>
 </body>
 </html>

@@ -23,13 +23,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
     <div class="page-header">
         <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to CSCI 4050 Online Bookstore</h1>
     </div>
-    <p>Your status is currently <b>active</b>.</p>
-    <p>Thank you for confirming your email.</p>
     <p>
         <a href="user-browse.php" class="btn btn-warning">Browse Books</a>
         <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
         <a href="reset-info.php" class="btn btn-warning">Reset Your Info</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
+    </p>
+    <p><img src="img\book-3.jpg" width="300" height="500"></p>
+    <p>
+    Title:   Mastering Unity Scripting<br>
+    Author:  Alan Thorn<br>
+    ISBN:    9781784390655<br>
+    User     Rating: 3.82/5<br>
+    Price:   19.99<br>
     </p>
 </body>
 </html>

@@ -54,6 +54,7 @@ mail($email, "Verify your email", "Please click the link below in order to verif
     </div>
     <p>Your status is currently <b>admin</b>.</p>
     <p>
+        <a href="add-admin.php" class="btn btn-warning">Add books</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
     </p>
 </body>

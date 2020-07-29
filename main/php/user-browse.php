@@ -7,6 +7,53 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
     header("location: login.php");
     exit;
 }
+
+// Define variables and initialize with empty values
+$search = $search_err = "";
+ 
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    // Validate new search
+    if(empty(trim($_POST["search"]))){
+        $search_err = "Please enter ISBN, title, or author name.";     
+    }
+    else{
+        $myvalue = trim($_POST["search"]);
+        $arr = explode(' ',trim($myvalue));
+        $search = $arr[0];
+    }
+
+        
+    // Check input errors
+    if(empty($search_err)){
+        if (($search == "Ted") || ($search == "Hagos")|| ($search == "9781484259368")|| ($search == "Learn")|| ($search == "Android")|| ($search == "Studio")|| ($search == "4")){
+            header("location: book-1-result.php");
+            exit();
+        }
+        else if (($search == "Jennifer")|| ($search == "Robbins")|| ($search == "Learning")|| ($search == "Web")|| ($search == "Design")|| ($search == "9781491960202")){
+            header("location: book-2-result.php");
+            exit();
+        }
+        else if (($search == "Alan")|| ($search == "Thorn")|| ($search == "Mastering")|| ($search == "Unity")|| ($search == "Scripting")|| ($search == "9781784390655")) {
+            header("location: book-3-result.php");
+            exit();
+        }
+        else if (($search == "Marcos")|| ($search == "Romero")|| ($search == "Blueprints")|| ($search == "Visual")|| ($search == "for")|| ($search == "Unreal")|| ($search == "Engine")|| ($search == "9781789347067")){
+            header("location: book-4-result.php");
+            exit();
+        }
+        else if (($search == "Cornelia")|| ($search == "Davis")|| ($search == "Cloud")|| ($search == "Native")|| ($search == "Patterns")|| ($search == "9781617294297")){
+            header("location: book-5-result.php");
+            exit();
+        }
+        else {
+            echo "Oops! we did not find anything that matches your search.";
+        }
+
+    }
+}
+
 ?>
  
 <!DOCTYPE html>
@@ -29,6 +76,18 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
         <a href="reset-info.php" class="btn btn-warning">Reset Your Info</a>
         <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
     </p>
+
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+            <div class="form-group <?php echo (!empty($search_err)) ? 'has-error' : ''; ?>">
+                <label>Search by a book by ISBN, title, or author name</label>
+                <input type="text" name="search" class="form-control" value="<?php echo $search; ?>">
+                <span class="help-block"><?php echo $search_err; ?></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <a class="btn btn-link" href="welcome.php">Cancel</a>
+            </div>
+        </form> 
 
     <p>Here are all the available books.</p>
 

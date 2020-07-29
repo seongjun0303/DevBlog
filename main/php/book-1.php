@@ -7,6 +7,35 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
     header("location: login.php");
     exit;
 }
+
+// Include config file
+require_once "config.php";
+
+$quantity = ""; 
+$quantity_err = "";
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty(trim($_POST["quantity"]))){
+        $quantity_err = "Please enter quantity";
+    }
+    else {
+        $quantity = trim($_POST["quantity"]);
+    }
+    if (empty($quantity_err)){
+        //create a cart for a user
+        $sql = "UPDATE cart SET book1 = book1 + ? WHERE cartid = ?";
+        $stmt = mysqli_prepare($link,$sql);
+        mysqli_stmt_bind_param($stmt, "is", $param_quantity, $param_cartid);
+        $param_cartid = $_SESSION["username"];
+        $param_quantity = $quantity;
+        mysqli_stmt_execute($stmt);
+
+        echo "books have been added";
+    }
+
+}
+
+
 ?>
  
 <!DOCTYPE html>
@@ -37,5 +66,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true ){
     User     Rating: 4.25/5<br>
     Price:   29.99<br>
     </p>
+    <div class="wrapper">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+                <div class="form-group <?php echo (!empty($quantity)) ? 'has-error' : ''; ?>">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" class="form-control" value="<?php echo $quantity; ?>">
+                    <span class="help-block"><?php echo $quantity_err; ?></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                    <a class="btn btn-link" href="welcome-admin.php">Cancel</a>
+                </div>
+        </form>
+    </div>
+
 </body>
 </html>

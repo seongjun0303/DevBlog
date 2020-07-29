@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(mysqli_stmt_execute($stmt)){
                  
                 //header("location: login.php"); change location according to book id
-
+                echo "Books added!";
 
             } else{
                 echo "Oops! Something went wrong. Please try again later.";

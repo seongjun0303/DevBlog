@@ -130,7 +130,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($firstname_err)&& empty($lastname_err)&&empty($email_err)){
+    if( && empty($password_err) && empty($confirm_password_err) && empty($firstname_err)&& empty($lastname_err)&&empty($email_err)){
         
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password, firstname, lastname, address, fullname, cardnumber, expiration, cvc, email) VALUES (?, ?,?,?,?,?,?,?,?,?)";
@@ -154,6 +154,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
+
+
+                //create a cart for a user
+                $sql = "INSERT INTO cart (cartid, book1, book2, book3, book4, book5) VALUES (?, 0, 0, 0, 0, 0)";
+                $stmt = mysqli_prepare($link,$sql);
+                mysqli_stmt_bind_param($stmt, "s", $param_cartid);
+                $param_cartid = $username;
+                mysqli_stmt_execute($stmt);
+
                 header("location: login.php");
             } else{
                 echo "Something went wrong. Please try again later.\n";

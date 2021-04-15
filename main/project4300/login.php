@@ -50,6 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         $_SESSION["id"] = $id;
                         $_SESSION["username"] = $username;     
                         $_SESSION["password"] = $password;
+
                         // Redirect user to welcome page
                         header("location: browse.php");
                     } else{

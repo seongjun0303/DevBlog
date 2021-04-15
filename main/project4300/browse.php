@@ -1,9 +1,18 @@
 <?php
 
+// Initialize the session
+session_start();
+
+
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    echo "hi";
+    // Welcome message
+    $message1 = $_SESSION["username"];
+    $message2 = "Welcome, ";
+    $message = $message2 . $message1;
+    echo "<script type='text/javascript'>alert('$message');</script>";
 }
+
 
 ?>
 
